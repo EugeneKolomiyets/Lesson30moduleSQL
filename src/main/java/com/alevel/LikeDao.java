@@ -11,7 +11,6 @@ public class LikeDao {
     private static final String URL0 = "jdbc:mysql://localhost:3306";
     private static final String CHECK_SCHEMA = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'facebook'";
     private static final String CREATE_SCHEMA ="CREATE SCHEMA IF NOT EXISTS `facebook` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;";
-    private static final String USE_SCHEMA ="USE `facebook`";
     private static final String CREATE_TABLE1 =
             "CREATE TABLE IF NOT EXISTS `facebook`.`comments` (\n" +
             "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
@@ -150,7 +149,6 @@ public class LikeDao {
                 connection.setAutoCommit(false);
                 try (Statement stmt = connection.createStatement()) {
                     stmt.executeUpdate(CREATE_SCHEMA);
-                    stmt.executeUpdate(USE_SCHEMA);
                     stmt.executeUpdate(CREATE_TABLE1);
                     stmt.executeUpdate(CREATE_TABLE2);
                     stmt.executeUpdate(CREATE_TABLE3);
@@ -175,8 +173,7 @@ public class LikeDao {
                 } catch (SQLException e) {
                     connection.rollback();
                     throw e;
-                }                 //PreparedStatement statement = connection.prepareStatement(CREATE_DATA);
-                //statement.executeUpdate();
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -199,6 +196,19 @@ public class LikeDao {
             } else
                 //System.out.println("тест");
                 return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public int getUserId(String user) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement(GET_USER_ID);
+            statement.setString(1, String.valueOf(user));
+            ResultSet result = statement.executeQuery();
+            if (result.next())
+                return result.getInt("id");
+            else
+                return 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -273,19 +283,6 @@ public class LikeDao {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-    }
-    public int getUserId(String user) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement(GET_USER_ID);
-            statement.setString(1, String.valueOf(user));
-            ResultSet result = statement.executeQuery();
-            if (result.next())
-                return result.getInt("id");
-            else
-                return 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
     public void deleteLike(Type type, String entity, String user) {
         LikeDao dao = new LikeDao();
