@@ -1,10 +1,10 @@
 package com.alevel;
 
-public class Users {
+public class User {
     int id;
     String name;
 
-    public Users(int id, String name) {
+    public User(int id, String name) {
         this.id = id;
         this.name = name;
     }
