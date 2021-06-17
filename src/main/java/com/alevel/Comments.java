@@ -3,13 +3,13 @@ package com.alevel;
 public class Comments {
     int id;
     String text;
-    int author;
-    int photo;
+    int authorId;
+    int photoId;
 
-    public Comments(int id, String text, int author, int photo) {
+    public Comments(int id, String text, int authorId, int photoId) {
         this.id = id;
         this.text = text;
-        this.author = author;
-        this.photo = photo;
+        this.authorId = authorId;
+        this.photoId = photoId;
     }
 }

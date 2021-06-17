@@ -3,11 +3,11 @@ package com.alevel;
 public class Photo {
     int id;
     String name;
-    int author;
+    int authorId;
 
-    public Photo(int id, String name, int author) {
+    public Photo(int id, String name, int authorId) {
         this.id = id;
         this.name = name;
-        this.author = author;
+        this.authorId = authorId;
     }
 }

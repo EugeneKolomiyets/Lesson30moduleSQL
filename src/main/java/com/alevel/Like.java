@@ -3,13 +3,13 @@ package com.alevel;
 public class Like {
     int id;
     int type;
-    int entity;
-    int user;
+    int entityId;
+    int userId;
 
-    public Like(int id, int type, int entity, int user) {
+    public Like(int id, int type, int entityId, int userId) {
         this.id = id;
         this.type = type;
-        this.entity = entity;
-        this.user = user;
+        this.entityId = entityId;
+        this.userId = userId;
     }
 }
